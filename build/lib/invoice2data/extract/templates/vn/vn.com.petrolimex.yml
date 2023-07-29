@@ -1,0 +1,70 @@
+issuer: Petrolimex
+fields:
+  symbol_no: 'Mẫu số\s+(\d+)'
+  symbol_id: 'Ký hiệu:\s+(.*)'
+  invoice_number: 'Số:\s+(\d+)'
+  seller_name: "Tên người bán.*"
+  seller_tax_no: 'Mã số thuế:\s+(.*)'
+  # seller_address: 'Mã số thuế::\s+(\d+)'
+  seller_phone: 'Điện thoại:\s+(.*)'
+  buyer_name: 'Tên người mua:.*'
+  buyer_fullname: "Họ tên người mua.*"
+
+  date: '\w+ \d{1,2} \w+ \d{1,2} \w+ \d{4}'
+
+  # total_amount_without_tax: "Tổng tiền chưa thuế.*"
+  # total_amount_with_tax: "Tổng tiền thuế.*"
+  # total_amount: "Tổng tiền thuế.*"
+
+  # THIS IS OKIE
+  # line_items:
+  #   parser: lines
+  #   start: 'STT\s+Tính chất'
+  #   end: "Thuế suất"
+  #   line: "(?P<item>  1.*$)"
+
+  # tables:
+  #   - start: thuế GTGT
+  #     end: "Thuế suất Tổng tiền chưa thuế Tổng tiền thuế"
+  #     # body: '\s+(?P<amount_untaxed>\d*,\d*)\s+(?P<amount_tax>\d*,\d*)\s+(?P<vat_rate>\d*,\d*)\s+%'
+  #     body: '\s+(?P<no>\w+)\s+(?P<service>\w+)\s+(?P<product>[\S ]+)'
+
+  # lines:
+  #   # start: 'lượng\s+giá\s+khấu\s+suất\s+thuế GTGT'
+  #   start: 'STT\s+Tính chất'
+  #   end: "STT"
+  #   # line: (?P<description>.+)\s+(?P<discount>\d+.\d+)\s+(?P<price>\d+\d+)
+  #   # line: (?P<id>\w+)\s+(?P<price>\w+)\s+(?P<discount>\d+)\s+(?P<tax>\d+)
+  #   line: "(?P<item>  1.*$)"
+  #   types:
+  #     # discount: float
+  #     id: int
+  #     price: int
+  #     discount: int
+  #     tax: int
+
+  lines:
+    parser: lines
+    start: 'STT\s+Tính chất\s+'
+    end: 'STT\s+Tên loại phí'
+    # line: "(?P<item>  1.*$)"
+    line: (?P<id>\w+)\s+(?P<nature>\w+)\s+(?P<service>\w+)\s+(?P<unit>\w+)\s+(?P<qty>\d+)\s+(?P<price>\d+)\s+(?P<discount>\d+)\s+(?P<tax>\d+)
+      types:
+        id: int
+        qty: int
+        price: int
+        discount: int
+        tax: int
+
+keywords:
+  - HOÁ ĐƠN GIÁ TRỊ GIA TĂNG
+  - Mẫu số
+  - Ký hiệu
+options:
+  currency: VND
+  date_formats:
+    # - "%d/%m/%Y"
+    - "%Y-%m-%d"
+  languages:
+    - vi
+  decimal_separator: "."
