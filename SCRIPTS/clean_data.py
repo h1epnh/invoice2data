@@ -27,8 +27,27 @@ for row in df.itertuples(index=True, name='Pandas'):
     # print(row.invoice_number)
 
     try:
-        # json_string = row.lines.replace("\'", "\"").strip('][')
 
+        # GET SELLER TAX_NO
+        json_string = row.seller_tax_no.replace("\'", "\"")
+        data = json.loads(json_string)
+        obj = data[0]
+        print(obj)
+        df.loc[row.Index, 'seller_tax_no'] = obj['tax_no']
+
+        # GET BUYER TAX_NO
+        json_string = row.buyer_tax_no.replace("\'", "\"")
+        data = json.loads(json_string)
+        obj = data[0]
+        print(obj)
+        df.loc[row.Index, 'buyer_tax_no'] = obj['tax_no']
+
+        # CLEAN DATA
+        df.loc[row.Index, 'seller_name'] = row.seller_name.replace("Tên người bán:", "")
+        df.loc[row.Index, 'buyer_name'] = row.buyer_name.replace("Tên người mua:", "")
+        df.loc[row.Index, 'buyer_fullname'] = row.buyer_fullname.replace("Họ tên người mua:", "")
+
+        # GET ITEMS
         json_string = row.lines.replace("\'", "\"")
         # print(json_string)
 

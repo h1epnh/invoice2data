@@ -3,14 +3,28 @@ fields:
   symbol_no: 'Mẫu số\s+(\d+)'
   symbol_id: 'Ký hiệu:\s+(.*)'
   invoice_number: 'Số:\s+(\d+)'
+  date: '\w+ \d{1,2} \w+ \d{1,2} \w+ \d{4}'
+
+  ### GROUP SELLER ###
   seller_name: "Tên người bán.*"
-  seller_tax_no: 'Mã số thuế:\s+(.*)'
-  # seller_address: 'Mã số thuế::\s+(\d+)'
   seller_phone: 'Điện thoại:\s+(.*)'
+  tax_no: 'Mã số thuế:\s+(.*)'
+  seller_tax_no:
+    parser: lines
+    start: 'Tên người bán:.*'
+    end: 'Địa chỉ'
+    line: 'Mã số thuế: (?P<tax_no>\d{10}-\d{3}|\d{10})'
+
+  ### GROUP BUYER ###
   buyer_name: 'Tên người mua:.*'
   buyer_fullname: "Họ tên người mua.*"
-
-  date: '\w+ \d{1,2} \w+ \d{1,2} \w+ \d{4}'
+  # buyer_tax_no: 'Mã số thuế:\s+(.*)'
+  buyer_tax_no:
+    parser: lines
+    start: 'Họ tên người mua:'
+    end: 'Địa chỉ'
+    line: 'Mã số thuế: (?P<tax_no>\d+)'
+  
 
   # total_amount_without_tax: "Tổng tiền chưa thuế.*"
   # total_amount_with_tax: "Tổng tiền thuế.*"
@@ -65,8 +79,7 @@ keywords:
 options:
   currency: VND
   date_formats:
-    # - "%d/%m/%Y"
-    - "%Y-%m-%d"
+    - "Ngày %d tháng %m năm %Y"
   languages:
     - vi
   decimal_separator: "."
