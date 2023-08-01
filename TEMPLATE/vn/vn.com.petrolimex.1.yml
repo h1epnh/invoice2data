@@ -4,6 +4,7 @@ fields:
   symbol_id: 'Ký hiệu:\s+(.*)'
   invoice_number: 'Số:\s+(\d+)'
   date: '\w+ \d{1,2} \w+ \d{1,2} \w+ \d{4}'
+  date_sign: 'Ký ngày: \d{4}-\d{1,2}-\d{1,2}'
 
   ### GROUP SELLER ###
   seller_name: "Tên người bán.*"
@@ -18,7 +19,7 @@ fields:
   ### GROUP BUYER ###
   buyer_name: 'Tên người mua:.*'
   buyer_fullname: "Họ tên người mua.*"
-  # buyer_tax_no: 'Mã số thuế:\s+(.*)'
+  buyer_address: 'Địa chỉ:\s+(.*)'
   buyer_tax_no:
     parser: lines
     start: 'Họ tên người mua:'
@@ -80,6 +81,7 @@ options:
   currency: VND
   date_formats:
     - "Ngày %d tháng %m năm %Y"
+    - "Ký ngày: %Y-%m-%d"
   languages:
     - vi
   decimal_separator: "."
