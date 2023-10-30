@@ -298,7 +298,7 @@ def main(args=None):
         try:
             res = extract_data(f.name, templates=templates, input_module=input_module)
             if res:
-                # logger.info(f.name)
+                logger.info(f.name)
                 # output.append(f.name)
                 logger.info(res)
                 output.append(res)
